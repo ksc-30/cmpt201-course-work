@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(){
+char *input =NULL;
+size_t length =0;
+
+
+printf("Enter programs to run");
+
+
+getline(&input, &length, stdin);
+
+printf("you output %s", input);
+}

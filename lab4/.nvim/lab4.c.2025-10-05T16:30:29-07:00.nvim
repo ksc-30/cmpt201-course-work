@@ -1,0 +1,207 @@
+karn
+ started a call that lasted a few seconds. — 2025-09-14, 8:57 PM
+Nav
+ started a call that lasted 2 hours. — 2025-09-14, 8:58 PM
+Nav — 2025-09-14, 10:14 PM
+unmute it
+#!/ bin / bash
+
+RANDOM_NUM=$RANDOM
+
+egrep "^.{$1}$" /usr/share/dict/words | head -$RANDOM | tail -1
+karn — 2025-09-14, 10:52 PM
+cat /usr/share/dict/words | grep -E "^[A-Za-z]{${1:-1,}}$" | head -$RANDOM | tail -1
+Nav — 2025-09-14, 10:55 PM
+cat /usr/share/dict/words | grep -E "^[A-Za-z]{${1:-1,}}$" | head -$RANDOM | tail -1
+grep -E "^[A-Za-z]{${1:-1,}}$" | head -$RANDOM | tail -1
+karn — 2025-09-16, 1:20 PM
+yo bro
+karn
+ started a call that lasted a few seconds. — 2025-09-16, 1:20 PM
+Nav — 2025-09-16, 1:21 PM
+wait I’ll call you when I’m outa here
+gimme a few minutes
+karn
+ started a call that lasted 2 minutes. — 2025-09-16, 1:21 PM
+Nav
+ started a call that lasted 5 minutes. — 2025-09-16, 2:18 PM
+Nav
+ started a call that lasted 2 minutes. — 2025-09-16, 2:42 PM
+Nav
+ started a call that lasted an hour. — 2025-09-16, 2:45 PM
+You missed a call from 
+Nav
+ that lasted 4 minutes. — 2025-09-16, 3:42 PM
+karn
+ started a call that lasted a few seconds. — 2025-09-17, 1:00 PM
+karn
+ started a call that lasted 4 minutes. — 2025-09-17, 1:16 PM
+karn
+ started a call that lasted 20 minutes. — 2025-09-17, 1:20 PM
+karn
+ started a call that lasted 38 minutes. — 2025-09-17, 1:42 PM
+karn
+ started a call that lasted 2 minutes. — 2025-09-17, 2:28 PM
+karn
+ started a call that lasted 19 minutes. — 2025-09-17, 5:41 PM
+karn
+ started a call that lasted 14 minutes. — 2025-09-17, 7:19 PM
+karn
+ started a call that lasted 4 minutes. — 2025-09-17, 7:48 PM
+Nav
+ started a call that lasted an hour. — 2025-09-17, 8:13 PM
+Nav — 2025-09-17, 8:52 PM
+Task 3: Compiling and Using Static and Shared Libraries
+
+In this task, you will learn how to compile static and shared libraries and use them. Again for grading, you need to use record to record what you do.
+
+    First, make sure you're recording (record) if you're not already. Check that you see [recording] in your prompt.
+    Create a directory named hello. We will refer to the current directory (where this README.md is in) as the assignment root directory, since it is the root of the directory tree for this assignment (that now contains a subdirectory named hello).
+Expand
+message.txt
+6 KB
+Nav — 2025-09-19, 10:50 AM
+Attachment file type: document
+Module1-Video1-.docx
+23.61 KB
+Attachment file type: document
+Module2-video-1-2.docx
+39.93 KB
+Attachment file type: document
+Required Viewing Additional Videos.docx
+21.57 KB
+karn
+ started a call that lasted 2 hours. — 2025-09-21, 12:57 PM
+Nav
+ started a call that lasted a minute. — 2025-09-21, 2:58 PM
+karn
+ started a call that lasted a few seconds. — 2025-09-21, 3:37 PM
+karn
+ started a call that lasted an hour. — 2025-09-21, 3:38 PM
+Nav — 2025-09-21, 3:57 PM
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+Nav
+ started a call that lasted 37 minutes. — 2025-09-25, 10:32 PM
+Nav
+ started a call that lasted 21 minutes. — 2025-09-27, 1:42 PM
+karn
+ started a call that lasted 2 hours. — 2025-09-28, 10:39 AM
+karn — 2025-10-01, 5:22 PM
+https://www.amazon.ca/Wireless-Rechargeable-Compatible-Real-time-Detection/dp/B0FCM14V6W?th=1
+Mini Wireless Camera, Rechargeable 4K 1080P Tuya Smart App 2.4Ghz C...
+Camera
+Image
+karn
+ started a call that lasted a few seconds. — 2025-10-02, 1:12 PM
+Nav
+ started a call that lasted an hour. — 2025-10-02, 1:12 PM
+karn
+ started a call that lasted 26 minutes. — 2025-10-02, 5:03 PM
+karn — 2025-10-02, 10:39 PM
+Dear [Professor’s Name],
+
+I wanted to ask if we are required to purchase InQuizitive in order to complete the quizzes, even if we already have the textbook. Also, would it be possible to just use the trial version instead of buying it?
+
+Thank you for your time and clarification.
+
+Best,
+Nav — 1:48 PM
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+Expand
+lab4.c
+3 KB
+﻿
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define HEAP_INCREASE 256
+#define BLOCK_SIZE 128
+#define BUF_SIZE 256
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+void handle_error(const char *msg) {
+  perror(msg);
+  exit(EXIT_FAILURE);
+}
+
+void print_out(const char *format, void *data, size_t data_size) {
+  char buf[BUF_SIZE];
+  ssize_t len = snprintf(buf, BUF_SIZE, format,
+                         data_size == sizeof(uint64_t) ? *(uint64_t *)data
+                                                       : *(void **)data);
+  if (len < 0) {
+    handle_error("snprintf failed in print_out");
+  }
+  if (write(STDOUT_FILENO, buf, len) == -1) {
+    handle_error("write failed in print_out");
+  }
+}
+
+void print_byte_data(int n) {
+  char buf[12];
+  int len = snprintf(buf, sizeof(buf), "%d\n", n);
+  if (len < 0) {
+    handle_error("snprintf failed in print_byte_data");
+  }
+  if (write(STDOUT_FILENO, buf, len) == -1) {
+    handle_error("write failed in print_byte_data");
+  }
+}
+
+int main(void) {
+  void *heap_start = sbrk(HEAP_INCREASE);
+  if (heap_start == (void *)-1) {
+    handle_error("sbrk failed to allocate memory");
+  }
+
+  struct header *block1 = (struct header *)heap_start;
+  struct header *block2 = (struct header *)((char *)heap_start + BLOCK_SIZE);
+
+  block1->size = BLOCK_SIZE;
+  block1->next = NULL;
+
+  block2->size = BLOCK_SIZE;
+  block2->next = block1;
+
+  void *data1_start = (char *)block1 + sizeof(struct header);
+  void *data2_start = (char *)block2 + sizeof(struct header);
+  size_t data_size = BLOCK_SIZE - sizeof(struct header);
+
+  memset(data1_start, 0, data_size);
+  memset(data2_start, 1, data_size);
+
+  print_out("first block:       %p\n", &block1, sizeof(block1));
+  print_out("second block:      %p\n", &block2, sizeof(block2));
+
+  print_out("first block size:  %llu\n", &block1->size, sizeof(block1->size));
+  print_out("first block next:  %p\n", &block1->next, sizeof(block1->next));
+  print_out("second block size: %llu\n", &block2->size, sizeof(block2->size));
+  print_out("second block next: %p\n", &block2->next, sizeof(block2->next));
+
+  for (size_t i = 0; i < data_size; ++i) {
+    print_byte_data(*((char *)data1_start + i));
+  }
+
+  for (size_t i = 0; i < data_size; ++i) {
+    print_byte_data(*((char *)data2_start + i));
+  }
+
+  return 0;
+}

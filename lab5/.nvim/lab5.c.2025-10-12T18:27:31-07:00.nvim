@@ -1,0 +1,134 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h> // Included for UINT64_MAX
+
+struct header {
+  uint64_t size;
+  struct header *next;
+  int id;
+};
+
+void initialize_block(struct header *block, uint64_t size, struct header *next,
+                      int id) {
+  block->size = size;
+  block->next = next;
+  block->id = id;
+}
+
+// --- Alternative find_first_fit ---
+// Uses a for loop, a common C idiom for list traversal.
+int find_first_fit(struct header *free_list_ptr, uint64_t size) {
+  for (struct header *node = free_list_ptr; node != NULL; node = node->next) {
+    if (node->size >= size) {
+      return node->id; // Return immediately upon finding the first match.
+    }
+  }
+  return -1; // Return -1 if no suitable block is found after the loop.
+}
+
+// --- Alternative find_best_fit ---
+// This version tracks the smallest "leftover" space (the difference)
+// instead of tracking the best block pointer.
+int find_best_fit(struct header *free_list_ptr, uint64_t size) {
+  int candidate_id = -1;
+  uint64_t min_diff = UINT64_MAX; // Start with the largest possible value.
+
+  for (struct header *crawler = free_list_ptr; crawler != NULL; crawler = crawler->next) {
+    if (crawler->size >= size) {
+      uint64_t current_diff = crawler->size - size;
+      if (current_diff < min_diff) {
+        // A better fit has been found, so update our records.
+        min_diff = current_diff;
+        candidate_id = crawler->id;
+      }
+    }
+  }
+  return candidate_id;
+}
+
+// --- Alternative find_worst_fit ---
+// This version tracks the largest block size seen so far.
+int find_worst_fit(struct header *free_list_ptr, uint64_t size) {
+  int result_id = -1;
+  uint64_t max_size_found = 0; // Start with a size of 0.
+
+  for (struct header *block_ptr = free_list_ptr; block_ptr != NULL; block_ptr = block_ptr->next) {
+    if (block_ptr->size >= size) {
+      // Check if this valid block is larger than the largest one seen so far.
+      if (block_ptr->size > max_size_found) {
+        max_size_found = block_ptr->size;
+        result_id = block_ptr->id;
+      }
+    }
+  }
+  return result_id;
+}
+
+
+int main(void) {
+
+  struct header *free_block1 = (struct header *)malloc(sizeof(struct header));
+  struct header *free_block2 = (struct header *)malloc(sizeof(struct header));
+  struct header *free_block3 = (struct header *)malloc(sizeof(struct header));
+  struct header *free_block4 = (struct header *)malloc(sizeof(struct header));
+  struct header *free_block5 = (struct header *)malloc(sizeof(struct header));
+
+  initialize_block(free_block1, 6, free_block2, 1);
+  initialize_block(free_block2, 12, free_block3, 2);
+  initialize_block(free_block3, 24, free_block4, 3);
+  initialize_block(free_block4, 8, free_block5, 4);
+  initialize_block(free_block5, 4, NULL, 5);
+
+  struct header *free_list_ptr = free_block1;
+
+  int first_fit_id = find_first_fit(free_list_ptr, 7);
+  int best_fit_id = find_best_fit(free_list_ptr, 7);
+  int worst_fit_id = find_worst_fit(free_list_ptr, 7);
+
+  printf("The ID for First-Fit algorithm is: %d\n", first_fit_id);
+  printf("The ID for Best-Fit algorithm is: %d\n", best_fit_id);
+  printf("The ID for Worst-Fit algorithm is: %d\n", worst_fit_id);
+
+  free(free_block1);
+  free(free_block2);
+  free(free_block3);
+  free(free_block4);
+  free(free_block5);
+  
+  return 0;
+}
+
+/*
+ * ============================================================================
+ * Part 2: Pseudo-code for Coalescing Contiguous Free Blocks
+ * ============================================================================
+ *
+ * FUNCTION coalesce(newly_freed_block, free_list_head):
+ *
+ * // --- Stage 1: Check for a free block physically AFTER ---
+ *
+ * block_after_addr = (char*)newly_freed_block + newly_freed_block->size
+ *
+ * // Search free list for the block at the calculated address
+ * // ...
+ * // If found, merge its size into newly_freed_block and remove it from the list.
+ * // ...
+ *
+ * // --- Stage 2: Check for a free block physically BEFORE ---
+ *
+ * was_absorbed = FALSE
+ * // Search free list for a prev_block where its end address equals newly_freed_block's start address
+ * // ...
+ * // If found, merge newly_freed_block's size into prev_block and set was_absorbed = TRUE.
+ * // ...
+ *
+ * // --- Stage 3: If not absorbed, add to the free list ---
+ *
+ * IF was_absorbed is FALSE:
+ * // Add newly_freed_block (which may have grown in Stage 1) to the free list.
+ * END IF
+ *
+ * END FUNCTION
+ */
+
